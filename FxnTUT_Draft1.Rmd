@@ -1,0 +1,82 @@
+---
+title: "Draft 2"
+author: "Savannah Jeffrey"
+date: "2023-06-25"
+output: html_document
+---
+
+## Function Tutorial 
+
+#### The picture I used for this project was from a trip I took to the Carolinas! 
+
+![](~/Documents/R Programming/595B1357-21E6-458A-A6AB-5C1E52906B0B.png)
+
+
+#### The package 
+
+##### The functions I will be showing today all come from the package lterpalettefinder, which allows for picture and color manipulation. 
+
+The first step is to load the palette finder package. 
+
+```{r Launch package }
+library(lterpalettefinder)
+```
+
+
+#### Function #1 : palette_extract
+
+##### The first function I am showing is palette_extract, which lets you extract the colors from a photo. 
+
+*This function has 3 main arguments*
+
+  1. image : this is the name/path to the picture (PNG, JPEG, TIFF, HEIC)
+  2. sort : if the extracted hex codes should be sorted by hue and saturation
+  3. progress_bar : if you want to 'message' a progress bar
+
+The syntax is 'obj <- palette_extract(image = "file name", sort = FALSE, progress_bar = TRUE)'
+
+```{r Extract color codes from image }
+five.points <- palette_extract(image = "595B1357-21E6-458A-A6AB-5C1E52906B0B.png", sort = FALSE, progress_bar = FALSE)
+```
+
+#### Function #2 : palette_demo
+
+##### Next, we use the palette_demo function to view the palette that has been extracted. 
+
+*This function has 4 main arguments:* 
+
+  1. palette : the vector of the palette to show the plot of hexadecimal codes 
+  2. export : whether you want to export the plot or not 
+  3. export_name : if yes to export, the name of the file to create 
+  4. export_path : if yes to export, the file path for the exported file
+
+The syntax is 'palette_demo(palette = obj, export = FALSE)'
+
+```{r View color codes in a plot }
+palette_demo(palette = five.points, export = FALSE)
+```
+
+#### Function #3 : palette_subsample
+
+##### Now that we have the original palette, we can randomly choose any number of colors (1-24) in that palette to create a smaller sample size. 
+
+This is done with the function palette_subsample. 
+
+*This function has 3 main arguments:* 
+
+  1. palette : original palette vector to subsample 
+  2. wanted : integer for how many colors to be in the new plot 
+  3. random_seed : integer for 'base :: set.seed()' which functions in randomizing the color selection
+
+The syntax is 'obj2 <- palette_subsample(obj, wanted = #, random seed = #)'
+
+```{r Randomly set to choose desired number of color codes }
+ten.points <- palette_subsample(five.points, wanted = 10, random_seed = 25)
+```
+
+Then we can use palette_demo again to view the smaller sample palette. 
+
+```{r View subsampled plot }
+palette_demo(ten.points, export = FALSE)
+```
+
