@@ -1,0 +1,76 @@
+---
+title: "Jeffrey_Hw3"
+author: "Savannah Jeffrey"
+date: "2023-06-18"
+output: html_document
+---
+
+Question 1
+The YAML of a markdown file is responsible for the documents information and formatting, as well as how the file will be knit. 
+
+Question 2
+The entire code and output will not show up when the file is knit.
+
+Question 3
+
+3A - Load packages and read in csv
+
+```{r}
+library(magrittr)
+library(dplyr)
+read.csv("bees.csv")
+str("bees.csv")
+```
+
+3B - Remove year 2021
+
+```{r}
+bees <- read.csv("bees.csv")
+bees2 <- dplyr::filter(.data = bees, year != "2021")
+```
+
+3C - Remove kleptoparasite_bees
+
+```{r}
+bees3<- dplyr::select (.data = bees2, - "kleptoparasite_bees")
+```
+
+
+3D - Add column 
+
+```{r}
+bees4 <- dplyr::mutate(bees3, total_bee_abundance = rowSums(select(bees3, -year)))
+```
+
+3E - Pipe functions  
+
+```{r}
+bees %>%
+  dplyr::filter(year != "2021") %>%
+  dplyr::select ( -"kleptoparasite_bees") %>%
+  dplyr::mutate(total_bee_abundance = rowSums(bees[c(1:5,7:8), 2:4])) %>%
+  dplyr::ungroup()
+
+```
+
+4A - Load packages and read csv 
+
+```{r}
+library(tidyr)
+tree_data <- read.csv("tree_lichen.csv")
+str(tree_data)
+```
+4B - Pivot data longer 
+
+```{r}
+trees2 <- tree_data %>%
+   tidyr::pivot_longer(!"tree", names_to = "lichen_type", values_to = "percent_cover" )
+```
+
+4C - Check pivoted data structure 
+
+```{r}
+str(trees2)
+```
+
+
